@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+            $table->dateTime('deadline');
+            $table->enum('status', ['in process', 'finished', 'abandoned'])->default('in process');
+            $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
+            $table->string('path');
+            $table->string('title');
+            $table->text('body');
             $table->timestamps();
         });
     }
