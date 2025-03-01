@@ -9,4 +9,12 @@ class Tag extends Model
 {
     /** @use HasFactory<\Database\Factories\TagFactory> */
     use HasFactory;
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
