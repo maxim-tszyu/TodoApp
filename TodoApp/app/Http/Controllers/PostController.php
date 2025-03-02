@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -12,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        return view('tasks.index');
     }
 
     /**
@@ -20,7 +23,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::where('user_id', Auth::id())->get();
+        $tags = Tag::where('user_id', Auth::id())->get();
+        return view('tasks.create', compact('categories', 'tags'));
     }
 
     /**
