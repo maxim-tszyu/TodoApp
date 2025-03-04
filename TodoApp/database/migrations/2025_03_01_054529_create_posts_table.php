@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('deadline');
             $table->enum('status', ['in process', 'finished', 'abandoned'])->default('in process');
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
-            $table->string('path');
+            $table->string('path')->nullable();
             $table->string('title');
             $table->text('body');
             $table->timestamps();
