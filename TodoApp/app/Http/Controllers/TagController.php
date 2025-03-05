@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TagController extends Controller
 {
@@ -12,7 +13,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::all();
+        return view('tags.index', compact('tags'));
     }
 
     /**
@@ -20,7 +22,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('tags.create');
     }
 
     /**
@@ -28,7 +30,11 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Tag::create([
+            'user_id' => Auth::user()->id,
+            'name' => $request->get('title')
+        ]);
+        return redirect(route('tags.index'));
     }
 
     /**
