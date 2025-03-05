@@ -15,7 +15,7 @@
             <x-forms.datetime name="deadline" label="Deadline" type="datetime-local"
                               :value="old('deadline', $task->deadline->format('Y-m-d\TH:i'))" />
             <x-forms.select name="categories[]" label="Categories" :options="$task->categories->pluck('name','id')->toArray()"
-                            :selected="old('categories', $task->categories->pluck('id'))" multiple />
+                            :selected="old('categories', $task->categories->pluck('id'))" multiple/>
             <x-forms.select name="tags[]" label="Tags" :options="$task->tags->pluck('name','id')->toArray()"
                             :selected="old('tags', $task->tags->pluck('name','id'))" multiple />
             <x-forms.file name="path" label="Attached documents" />

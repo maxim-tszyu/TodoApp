@@ -9,9 +9,9 @@
             <x-forms.select name="priority" label="Priority"
                             :options="['low' => 'Low', 'medium' => 'Medium', 'high' => 'High']"/>
             <x-forms.datetime name="deadline" label="Deadline" type="datetime-local"/>
-            <x-forms.select name="categories[]" label="Categories" :options="$task->categories->pluck('name','id')->toArray()"
+            <x-forms.select name="categories[]" label="Categories" :options="$categories->pluck('name','id')->toArray()"
                             multiple/>
-            <x-forms.select name="tags[]" label="Tags" :options="$task->tags->pluck('name','id')->toArray()" multiple/>
+            <x-forms.select name="tags[]" label="Tags" :options="$tags->pluck('name','id')->toArray()" multiple/>
             <x-forms.file name="path" label="Attached documents"/>
         </x-forms.form>
     </x-tasks.task-layout>
