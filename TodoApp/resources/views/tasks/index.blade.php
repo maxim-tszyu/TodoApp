@@ -7,31 +7,17 @@
                 <a href="{{ route('tasks.create') }}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 shadow-sm">
                     ➕ Добавить задачу
                 </a>
-        </div>
+            </div>
         </div>
 
         <div class="bg-yellow-50 border-2 border-yellow-200 shadow-md rounded-lg p-6">
-            @forelse ($tasks as $task)
-                <div class="mb-4 border-b border-yellow-200 pb-4">
-                    <h2 class="text-xl font-semibold text-yellow-900 mb-1">
-                        <a href="{{ route('tasks.show', $task) }}" class="hover:underline">{{ $task->title }}</a>
-                    </h2>
-                    <p class="text-yellow-800 mb-1">Автор: {{ $task->user->name }}</p>
-                    <p class="text-yellow-800 mb-1">Дедлайн: {{ $task->deadline->format('d.m.Y H:i') }}</p>
-
-                    <div class="flex items-center gap-2 mt-2">
-                        <a href="{{ route('tasks.show', $task) }}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 shadow-sm">👁 Просмотр</a>
-                        <a href="{{ route('tasks.edit', $task) }}" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 shadow-sm">✏ Редактировать</a>
-                        <form action="{{ route('tasks.destroy', $task) }}" method="POST" onsubmit="return confirm('Точно удалить?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 shadow-sm">🗑 Удалить</button>
-                        </form>
-                    </div>
-                </div>
-            @empty
-                <p class="text-yellow-800">Задач пока нет.</p>
-            @endforelse
+            <div class="flex flex-wrap gap-4 justify-between">
+                @forelse ($tasks as $task)
+                    <x-tasks.card :task="$task" />
+                @empty
+                    <p class="text-yellow-800">Задач пока нет.</p>
+                @endforelse
+            </div>
         </div>
     </div>
 </x-app-layout>

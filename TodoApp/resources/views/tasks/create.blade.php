@@ -4,8 +4,6 @@
         <x-forms.form method="POST" action="{{ route('tasks.store') }}" enctype="multipart/form-data">
             <x-forms.input name="title" label="Title" placeholder="Title"></x-forms.input>
             <x-forms.input name="body" label="Body" placeholder="Body"></x-forms.input>
-            <x-forms.select name="status" label="Status"
-                            :options="['in process' => 'In process', 'finished' => 'Finished', 'abandoned' => 'Abandoned']"/>
             <x-forms.select name="priority" label="Priority"
                             :options="['low' => 'Low', 'medium' => 'Medium', 'high' => 'High']"/>
             <x-forms.datetime name="deadline" label="Deadline" type="datetime-local"/>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
             $table->dateTime('deadline');
-            $table->enum('status', ['in process', 'finished', 'abandoned'])->default('in process');
+            $table->enum('status', ['not taken', 'in process', 'finished', 'abandoned'])->default('not taken');
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->string('path')->nullable();
             $table->string('title');

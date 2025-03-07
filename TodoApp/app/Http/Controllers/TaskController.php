@@ -64,7 +64,7 @@ class TaskController extends Controller
         $task->tags()->detach();
         $task->categories()->detach();
 
-        $task->update($validated_data);
+        $task->update(collect($validated_data)->except(['tags','categories'])->toArray());
         if($request->get('tags')){
             $task->tags()->sync($request->get('tags'));
         }

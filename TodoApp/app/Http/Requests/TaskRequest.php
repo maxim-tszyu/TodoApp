@@ -25,10 +25,12 @@ class TaskRequest extends FormRequest
         $rules = [
             'title' => 'required|max:255',
             'body' => 'required',
-            'status' => 'required',
             'priority' => 'required',
             'deadline' => 'required|date',
         ];
+        if($request->has('status')){
+            $rules['status'] = 'required';
+        }
         if($request->has('categories')){
             $rules['categories'] = 'required|array';
             $rules['categories.*'] = 'required|integer|exists:categories,id';
