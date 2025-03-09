@@ -10,9 +10,9 @@ class Category extends Model
     /** @use HasFactory<\Database\Factories\CategoryFactory> */
     use HasFactory;
 
-    public function posts()
+    public function tasks()
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsToMany(Task::class);
     }
     public function user()
     {

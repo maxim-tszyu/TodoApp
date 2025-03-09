@@ -42,7 +42,8 @@ class CategoryController extends Controller
      */
     public function show(Category $cat)
     {
-        //
+        $tasks = $cat->tasks()->where('user_id', Auth::user()->id)->get();
+        return view('categories.show', compact('tasks','cat'));
     }
 
     /**
@@ -50,7 +51,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $cat)
     {
-        //
+        return view('categories.edit', compact('cat'));
     }
 
     /**
@@ -58,7 +59,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $cat)
     {
-        //
+        $validated_data = $request->validate(['name' => 'required']);
+        $cat->update($validated_data);
+        return redirect(route('categories.index'));
     }
 
     /**

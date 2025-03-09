@@ -5,7 +5,7 @@
         🏷 {{ $category->name }}
     </h2>
     <div class="flex items-center gap-2">
-        <a href="{{ route('tasks.index', $category) }}" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 shadow-sm">👁 Просмотр</a>
+        <a href="{{ route('categories.show', $category) }}" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 shadow-sm">👁 Просмотр</a>
         <a href="{{ route('categories.edit', $category) }}" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 shadow-sm">✏ Редактировать</a>
         <form action="{{ route('categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Точно удалить?');">
             @csrf

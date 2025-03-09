@@ -9,7 +9,6 @@ class Task extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory;
-    protected $table = 'posts';
     protected $casts = [
         'deadline' => 'datetime'
     ];

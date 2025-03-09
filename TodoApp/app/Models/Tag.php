@@ -9,7 +9,7 @@ class Tag extends Model
 {
     /** @use HasFactory<\Database\Factories\TagFactory> */
     use HasFactory;
-    public function posts()
+    public function tasks()
     {
         return $this->hasMany(Post::class);
     }
