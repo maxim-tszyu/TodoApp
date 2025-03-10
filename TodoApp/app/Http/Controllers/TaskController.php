@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     use AuthorizesRequests;
+
     public function index()
     {
         $tasks = Task::where('user_id', Auth::id())->get();
@@ -36,7 +37,6 @@ class TaskController extends Controller
             'user_id' => Auth::id(),
             'title' => $attributes['title'],
             'body' => $attributes['body'],
-            'status' => $attributes['status'],
             'priority' => $attributes['priority'],
             'deadline' => $attributes['deadline'],
         ]);
@@ -55,7 +55,6 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $this->authorize('view', $task);
-
         return view('tasks.show', compact('task'));
     }
 
@@ -90,7 +89,6 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $this->authorize('delete', $task);
-
         $task->delete();
         return redirect(route('tasks.index'));
     }
