@@ -39,6 +39,9 @@ class TaskRequest extends FormRequest
             $rules['tags'] = 'required|array';
             $rules['tags.*'] = 'required|integer|exists:tags,id';
         }
+        if ($request->hasFile('path')) {
+            $rules['path'] = 'required|file|mimes:jpg,jpeg,png|max:2048';
+        }
 
         return $rules;
     }

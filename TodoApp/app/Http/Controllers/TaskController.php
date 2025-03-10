@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Models\Tag;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -46,8 +47,11 @@ class TaskController extends Controller
         if (isset($attributes['categories'])) {
             $task->categories()->sync($attributes['categories']);
         }
-        if (isset($attributes['file'])) {
-            $filePath = $attributes['path']->store('files', 's3');
+        if ($request->hasFile('path')) {
+            $fileName = $request->path->getClientOriginalName();
+            $safeFilePath = str_replace(' ', '-', $task->title.'/'.$fileName);
+            $filePath = $request->file('path')->store('tasks/'.$task->user_id.'/'.$safeFilePath, 'attachments');
+            $task->update(['path' => $filePath]);
         }
         return redirect(route('tasks.index'));
     }
@@ -83,12 +87,24 @@ class TaskController extends Controller
         if ($request->get('categories')) {
             $task->categories()->sync($request->get('categories'));
         }
+        if ($request->hasFile('path')) {
+            if ($task->path && Storage::disk('attachments')->exists($task->path)) {
+                Storage::disk('attachments')->delete($task->path);
+            }
+            $fileName = $request->path->getClientOriginalName();
+            $safeFilePath = str_replace(' ', '-', $task->title.'/'.$fileName);
+            $filePath = $request->file('path')->store('tasks/'.$task->user_id.'/'.$safeFilePath, 'attachments');
+            $task->update(['path' => $filePath]);
+        }
         return redirect(route('tasks.index'));
     }
 
     public function destroy(Task $task)
     {
         $this->authorize('delete', $task);
+        if ($task->path && Storage::disk('attachments')->exists($task->path)) {
+            Storage::disk('attachments')->delete($task->path);
+        }
         $task->delete();
         return redirect(route('tasks.index'));
     }

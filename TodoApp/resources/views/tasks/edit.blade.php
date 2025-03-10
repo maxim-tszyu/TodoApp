@@ -21,8 +21,17 @@
 
             <x-forms.select name="tags[]" label="Тэги" :options="$tags->pluck('name','id')->toArray()"
                             :selected="old('tags', $task->tags->pluck('id'))" multiple class="mb-4"/>
+            <div class="form-group">
+                <label for="path">Прикрепить документы</label>
 
-            <x-forms.file name="path" label="Прикрепить документы" class="mb-4" />
+                @if($task->path && Storage::disk('attachments')->exists($task->path))
+                    <div class="mb-2">
+                        <a href="{{ Storage::disk('attachments')->url($task->path) }}" target="_blank">Скачать текущий файл</a>
+                    </div>
+                @endif
+
+                <x-forms.file name="path" label="Прикрепить документы" class="mb-4" />
+            </div>
 
             <div class="flex gap-4 mt-6">
                 <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 shadow-sm transition">
