@@ -5,7 +5,19 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Jobs\TaskRemindJob;
+use App\Models\Task;
+use App\Models\User;
 
+Route::get('/test-job', function () {
+    $task = Task::first();  // Получаем задачу
+    $user = User::first();  // Получаем пользователя
+
+    // Добавляем задачу в очередь
+    TaskRemindJob::dispatch($task);
+
+    return 'Job dispatched!';
+});
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');

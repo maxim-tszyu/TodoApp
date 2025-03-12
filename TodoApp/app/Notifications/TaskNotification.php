@@ -6,17 +6,18 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Mail\TaskUnnoticedMail;
+use App\Mail\TaskFailedMail;
+use App\Mail\TaskRemindMail;
 
-class TaskNotification extends Notification
+class TaskNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    /**
-     * Create a new notification instance.
-     */
-    public function __construct()
+
+    public function __construct(public $task)
     {
-        //
+
     }
 
     /**
@@ -26,18 +27,15 @@ class TaskNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-    public function toMail(object $notifiable): MailMessage
+    public function toMail(object $notifiable): TaskRemindMail
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return (new TaskRemindMail($this->task));
     }
 
     /**
@@ -48,7 +46,8 @@ class TaskNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'task' => $this->task->id,
+            'date' => now()
         ];
     }
 }
