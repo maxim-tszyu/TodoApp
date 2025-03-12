@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use App\Models\Task;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -17,15 +16,14 @@ class TaskRemindMail extends Mailable
 
     public function __construct(public Task $task)
     {
-        //
     }
 
-    public function envelope(): Envelope
+    public function envelope()
     {
         return new Envelope(
-            subject: $this->task->title.' has 1 day left!',
             from: new Address(env('MAIL_USERNAME'), 'maxonthephp'),
-            to: new Address($this->task->user->email),
+            subject: $this->task->title . ' has 1 day left!',
+            to: new Address($this->task->user->email, $this->task->user->email)
         );
     }
 

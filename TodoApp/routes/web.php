@@ -10,11 +10,7 @@ use App\Models\Task;
 use App\Models\User;
 
 Route::get('/test-job', function () {
-    $task = Task::first();  // Получаем задачу
-    $user = User::first();  // Получаем пользователя
-
-    // Добавляем задачу в очередь
-    TaskRemindJob::dispatch($task);
+    TaskRemindJob::dispatch(Task::first());
 
     return 'Job dispatched!';
 });

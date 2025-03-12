@@ -28,8 +28,6 @@ class TaskRemindJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $user = $this->task->user;
-
-        Notification::send($user, new TaskNotification($this->task));
+        Notification::send($this->task->user, new TaskNotification($this->task));
     }
 }
