@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Task;
-use App\Notifications\TaskNotification;
+use App\Notifications\TaskRemindNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
@@ -28,6 +28,6 @@ class TaskRemindJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Notification::send($this->task->user, new TaskNotification($this->task));
+        Notification::send($this->task->user, new TaskRemindNotification($this->task));
     }
 }

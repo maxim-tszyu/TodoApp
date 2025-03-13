@@ -20,12 +20,12 @@ class TaskUnnoticedMail extends Mailable
         //
     }
 
-    public function envelope(): Envelope
+    public function envelope()
     {
         return new Envelope(
-            subject: $this->task->title.' with '. $this->task->priority. ' priority has gone unnoticed for a week',
             from: new Address(env('MAIL_USERNAME'), 'maxonthephp'),
-            to: new Address($this->task->user->email),
+            subject: $this->task->title . ' has 1 day left!',
+            to: new Address($this->task->user->email, $this->task->user->email)
         );
     }
 

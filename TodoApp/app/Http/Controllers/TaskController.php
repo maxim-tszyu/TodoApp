@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TaskRemindedEvent;
 use App\Http\Requests\TaskRequest;
 use App\Models\Category;
 use App\Models\Task;
@@ -41,6 +42,7 @@ class TaskController extends Controller
             'priority' => $attributes['priority'],
             'deadline' => $attributes['deadline'],
         ]);
+        event(new TaskRemindedEvent($task));
         if (isset($attributes['tags'])) {
             $task->tags()->sync($attributes['tags']);
         }
