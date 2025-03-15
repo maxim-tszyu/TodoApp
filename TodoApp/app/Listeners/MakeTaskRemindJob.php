@@ -5,11 +5,9 @@ namespace App\Listeners;
 use App\Events\TaskProcessed;
 use App\Events\TaskRemindedEvent;
 use App\Jobs\TaskRemindJob;
-use App\Notifications\TaskRemindNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
-class MakeTaskRemindJob
+class MakeTaskRemindJob implements ShouldQueue
 {
     /**
      * Create the event listener.

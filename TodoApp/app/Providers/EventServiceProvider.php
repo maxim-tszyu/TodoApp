@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\InactiveTasksDelete;
 use App\Events\TaskRemindedEvent;
 use App\Listeners\MakeTaskRemindJob;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -15,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         TaskRemindedEvent::class => [
             MakeTaskRemindJob::class,
         ],
+        InactiveTasksDelete::class => [
+            \App\Listeners\InactiveTasksDelete::class,
+        ]
     ];
 
     public function register(): void
