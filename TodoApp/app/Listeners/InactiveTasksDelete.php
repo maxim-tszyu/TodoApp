@@ -19,7 +19,7 @@ class InactiveTasksDelete
     /**
      * Handle the event.
      */
-    public function handle(\App\Events\InactiveTasksDelete $event): void
+    public function handle(\App\Events\InactiveTasksDeleteEvent $event): void
     {
         TaskDeleteJob::dispatch($event->task);
     }

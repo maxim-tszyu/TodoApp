@@ -15,6 +15,7 @@ Schedule::call(function() {
 })->dailyAt('00:00')->name('task_reminder');
 Schedule::call(function() {
     Task::whereDate('updated_at', '=', date('Y-m-d', strtotime('previous year')))->each(function($task) {
-        event(new \App\Events\InactiveTasksDelete($task));
+        event(new \App\Events\InactiveTasksDeleteEvent($task));
     });
 })->dailyAt('00:00')->name('old_tasks_delete');
+

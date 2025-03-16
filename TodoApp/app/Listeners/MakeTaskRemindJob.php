@@ -2,7 +2,6 @@
 
 namespace App\Listeners;
 
-use App\Events\TaskProcessed;
 use App\Events\TaskRemindedEvent;
 use App\Jobs\TaskRemindJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
