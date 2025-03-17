@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Task;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -13,7 +14,7 @@ class TaskFailedNotification extends Notification implements ShouldQueue
     use Queueable;
 
 
-    public function __construct(public $task)
+    public function __construct(public Task $task)
     {
 
     }

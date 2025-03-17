@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Task;
 use App\Notifications\TaskUnnoticedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -14,7 +15,7 @@ class TaskUnnoticedJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(public Task $task)
     {
         //
     }

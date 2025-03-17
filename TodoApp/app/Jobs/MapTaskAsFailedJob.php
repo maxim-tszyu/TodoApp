@@ -3,12 +3,10 @@
 namespace App\Jobs;
 
 use App\Models\Task;
-use App\Notifications\TaskFailedNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Notification;
 
-class TaskFailedJob implements ShouldQueue
+class MapTaskAsFailedJob implements ShouldQueue
 {
     use Queueable;
 
@@ -25,6 +23,9 @@ class TaskFailedJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Notification::send($this->task->user, new TaskFailedNotification($this->task));
+        if ($this->task->status != 'finished' && $this->task->status != 'abandoned') {
+            $this->task->status = 'abandoned';
+            $this->task->save();
+        }
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TaskUnnoticedEvent
+class MapEventAsFailedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,7 +20,7 @@ class TaskUnnoticedEvent
      */
     public function __construct(public Task $task)
     {
-        //
+
     }
 
 }
