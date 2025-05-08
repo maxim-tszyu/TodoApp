@@ -6,6 +6,7 @@ use App\Events\TaskRemindedEvent;
 use App\DTO\CreateTaskDTO;
 use App\Models\Task;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class TaskService
 {
@@ -30,6 +31,28 @@ class TaskService
                 'attachments'
             );
             $task->update(['path' => $filePath]);
+        }
+    }
+    public function update(CreateTaskDTO $dto,  Task $task) {
+        $task->tags()->detach();
+        $task->categories()->detach();
+        $task->update([
+            'title' => $dto->title,
+            'body' => $dto->body,
+            'priority' => $dto->priority,
+            'deadline' => $dto->deadline,
+        ]);
+        if ($dto->tags) {
+            $task->tags()->sync($dto->tags);
+        }
+        if ($dto->categories) {
+            $task->categories()->sync($dto->categories);
+        }
+        if ($dto->path) {
+            if ($task->path && Storage::disk('attachments')->exists($task->path)) {
+                Storage::disk('attachments')->delete($task->path);
+            }
+            $this->handleFileUpload($task, $dto->path);
         }
     }
     public function syncRelations(Task $task, CreateTaskDTO $dto, ...$relations) {

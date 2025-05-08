@@ -64,27 +64,8 @@ class TaskController extends Controller
     public function update(TaskRequest $request, Task $task)
     {
         $this->authorize('update', $task);
-
-        $validated_data = $request->validated();
-        $task->tags()->detach();
-        $task->categories()->detach();
-
-        $task->update(collect($validated_data)->except(['tags', 'categories'])->toArray());
-        if ($request->get('tags')) {
-            $task->tags()->sync($request->get('tags'));
-        }
-        if ($request->get('categories')) {
-            $task->categories()->sync($request->get('categories'));
-        }
-        if ($request->hasFile('path')) {
-            if ($task->path && Storage::disk('attachments')->exists($task->path)) {
-                Storage::disk('attachments')->delete($task->path);
-            }
-            $fileName = $request->path->getClientOriginalName();
-            $safeFilePath = str_replace(' ', '-', $task->title.'/'.$fileName);
-            $filePath = $request->file('path')->store('tasks/'.$task->user_id.'/'.$safeFilePath, 'attachments');
-            $task->update(['path' => $filePath]);
-        }
+        $dto = CreateTaskDTO::fromRequest($request);
+        $this->taskService->update($dto, $task);
         return redirect(route('tasks.index'));
     }
 
