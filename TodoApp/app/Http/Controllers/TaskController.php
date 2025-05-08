@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Events\TaskRemindedEvent;
+use App\DTO\CreateTaskDTO;
 use App\Http\Requests\TaskRequest;
 use App\Models\Category;
 use App\Models\Task;
 use App\Models\Tag;
+use App\Services\TaskService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +16,11 @@ use Illuminate\Support\Facades\Storage;
 class TaskController extends Controller
 {
     use AuthorizesRequests;
+
+    public function __construct(
+        private TaskService $taskService
+    ){
+    }
 
     public function index()
     {
@@ -33,28 +40,8 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
         $this->authorize('create', Task::class);
-
-        $attributes = $request->validated();
-        $task = Task::create([
-            'user_id' => Auth::id(),
-            'title' => $attributes['title'],
-            'body' => $attributes['body'],
-            'priority' => $attributes['priority'],
-            'deadline' => $attributes['deadline'],
-        ]);
-        event(new TaskRemindedEvent($task));
-        if (isset($attributes['tags'])) {
-            $task->tags()->sync($attributes['tags']);
-        }
-        if (isset($attributes['categories'])) {
-            $task->categories()->sync($attributes['categories']);
-        }
-        if ($request->hasFile('path')) {
-            $fileName = $request->path->getClientOriginalName();
-            $safeFilePath = str_replace(' ', '-', $task->title.'/'.$fileName);
-            $filePath = $request->file('path')->store('tasks/'.$task->user_id.'/'.$safeFilePath, 'attachments');
-            $task->update(['path' => $filePath]);
-        }
+        $dto = CreateTaskDTO::fromRequest($request);
+        $this->taskService->create($dto);
         return redirect(route('tasks.index'));
     }
 
