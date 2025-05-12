@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\TaskRemindedEvent;
 use App\DTO\CreateTaskDTO;
 use App\Http\Requests\TaskRequest;
 use App\Models\Category;

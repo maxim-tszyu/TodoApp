@@ -19,13 +19,6 @@
 
             <x-forms.file name="path" label="Прикрепить документы" class="mb-4"/>
 
-            <div class="flex gap-4 mt-6">
-                <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 shadow-sm transition">
-                    💾 Создать задачу
-                </button>
-                <a href="{{ route('tasks.index') }}"
-                   class="bg-yellow-200 text-yellow-900 px-4 py-2 rounded hover:bg-yellow-300 shadow-sm transition">⬅ Назад</a>
-            </div>
         </x-forms.form>
     </x-tasks.task-layout>
 </x-app-layout>

@@ -4,31 +4,30 @@
             <h1 class="text-3xl font-bold mb-6 text-[#5d5c61]">Главная</h1>
         </div>
 
-        <div class="grid grid-cols-8 gap-4"> <!-- Изменено с 6 на 8 для широкой левой части -->
-            <!-- Левый блок (шире) -->
+        <div class="grid grid-cols-8 gap-4">
             <div class="col-span-5 space-y-4">
                 <div class="bg-[#7395ae] text-white p-4 rounded-lg shadow">
                     <h2 class="font-bold mb-2">Статистика задач</h2>
                     <div class="flex justify-between">
                         <div class="text-center">
                             <p>Создано</p>
-                            <p class="text-2xl">113</p>
+                            <p class="text-2xl">{{ $tasks_created ?? '' }}</p>
                         </div>
                         <div class="text-center">
                             <p>Завершено</p>
-                            <p class="text-2xl">97</p>
+                            <p class="text-2xl">{{ $tasks_finished ?? ''}}</p>
                         </div>
                         <div class="text-center">
                             <p>Брошено</p>
-                            <p class="text-2xl">14</p>
+                            <p class="text-2xl">{{ $tasks_abandoned ?? ''}}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-[#b1a296] p-4 rounded-lg shadow">
                     <h2 class="font-bold mb-2">Наблюдения</h2>
-                    <p>Больше всего задач вы создаёте в Понедельник.</p>
-                    <p>Больше всего задач вы завершаете во Вторник.</p>
+                    <p>Больше всего задач вы создаёте в {{ $day_most_created ?? ''}}.</p>
+                    <p>Больше всего задач вы завершаете во {{ $day_most_finished ?? ''}}</p>
                 </div>
 
                 <div class="bg-[#379683] text-white p-4 rounded-lg shadow">
@@ -36,7 +35,6 @@
                     <p>Человек, который просыпается в 6 утра, по статистике, закрывает все задачи к 18:00 вечера.</p>
                 </div>
 
-                <!-- Список тегов -->
                 <div class="bg-[#f0f0f0] p-4 rounded-lg shadow">
                     <h2 class="font-bold mb-2">Теги</h2>
                     <ul class="space-y-2">
